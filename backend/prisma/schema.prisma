@@ -1,0 +1,140 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// --------------------------------------
+// ENUMS
+// --------------------------------------
+
+enum Role {
+  EMPLOYEE
+  MANAGER
+  HR_ADMIN
+  FINANCE
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ReimbursementStatus {
+  PENDING_MANAGER
+  PENDING_FINANCE
+  APPROVED
+  PAID
+  REJECTED
+}
+
+enum PayrollStatus {
+  DRAFT
+  PROCESSING
+  PAID
+}
+
+// --------------------------------------
+// MODELS
+// --------------------------------------
+
+model Department {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  code      String     @unique
+  employees Employee[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Employee {
+  id           String     @id @default(uuid())
+  nik          String     @unique
+  email        String     @unique
+  passwordHash String
+  fullName     String
+  role         Role       @default(EMPLOYEE)
+  salary       Decimal    @db.Decimal(12, 2)
+  
+  // Relasi Departemen
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+
+  // Self-Relation Atasan (Manager) & Subordinate
+  managerId    String?
+  manager      Employee?  @relation("ManagerSubordinates", fields: [managerId], references: [id])
+  subordinates Employee[] @relation("ManagerSubordinates")
+
+  // Relasi Transaksi
+  attendances     Attendance[]
+  leaveRequests   LeaveRequest[]
+  reimbursements  Reimbursement[]
+  payrolls        Payroll[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attendance {
+  id         String   @id @default(uuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  
+  clockIn    DateTime
+  clockOut   DateTime?
+  latitude   Float
+  longitude  Float
+  
+  createdAt  DateTime @default(now())
+}
+
+model LeaveRequest {
+  id         String      @id @default(uuid())
+  employeeId String
+  employee   Employee    @relation(fields: [employeeId], references: [id])
+  
+  startDate  DateTime
+  endDate    DateTime
+  reason     String
+  status     LeaveStatus @default(PENDING)
+  
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Reimbursement {
+  id          String              @id @default(uuid())
+  employeeId  String
+  employee    Employee            @relation(fields: [employeeId], references: [id])
+  
+  title       String
+  amount      Decimal             @db.Decimal(12, 2)
+  proofUrl    String
+  status      ReimbursementStatus @default(PENDING_MANAGER)
+  
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+}
+
+model Payroll {
+  id            String        @id @default(uuid())
+  employeeId    String
+  employee      Employee      @relation(fields: [employeeId], references: [id])
+  
+  month         Int
+  year          Int
+  basicSalary   Decimal       @db.Decimal(12, 2)
+  allowances    Decimal       @default(0) @db.Decimal(12, 2)
+  deductions    Decimal       @default(0) @db.Decimal(12, 2)
+  netSalary     Decimal       @db.Decimal(12, 2)
+  status        PayrollStatus @default(DRAFT)
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@unique([employeeId, month, year])
+}

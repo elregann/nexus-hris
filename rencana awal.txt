@@ -1,0 +1,56 @@
+Kamis, 17 September 2026, 14:50 WIB
+
+Pilihan mantap, Jes! HRIS (Human Resource Information System) & Payroll itu salah satu aplikasi *enterprise* paling ideal buat belajar. Logika bisnisnya padat dan kompleksitasnya tinggi.
+
+Di proyek ini kita bakal langsung berhadapan sama skenario nyata:
+
+* **Role-Based Access Control (RBAC):** Hak akses berbeda untuk Karyawan, Manager, HR, dan Finance.
+* **Approval Workflows (State Machine):** Alur status berkas yang ga boleh bocor (misal: Draft $\rightarrow$ Pending Manager $\rightarrow$ Approved HR $\rightarrow$ Paid Finance).
+* **Data Integrity & Calculation:** Kalkulasi angka sensitif untuk gaji, potongan, dan *reimbursement*.
+
+---
+
+**Fase 1: Requirements Gathering (Briefing Klien)**
+
+Bayangin aku berperan sebagai **VP of HR & IT dari PT Nexus Dynamics** (perusahaan dengan 5.000+ karyawan). Ini masalah utama yang kami hadapi dan butuh kamu selesaikan lewat web portal baru ini:
+
+**Problem Utama Kami:**
+
+1. **Pengolahan Data Lambat:** Pengajuan cuti, lembur, dan *reimbursement* masih via form manual/Excel. Approval-nya lambat dan berkas suka terselip.
+2. **Hitung Gaji Makan Waktu:** Tiap akhir bulan, tim Payroll butuh waktu 2 minggu cuma buat merekap absensi dan menghitung gaji 5.000 karyawan secara manual.
+3. **Keamanan Data:** Dokumen gaji dan *reimbursement* rawan bocor karena belum ada sistem terpusat dengan batasan akses yang ketat.
+
+**Target Modul Utama:**
+
+* **Modul 1 (Employee Management):** Manajemen data induk karyawan & struktur departemen.
+* **Modul 2 (Attendance & Leave):** Absensi harian & pengajuan cuti/lembur.
+* **Modul 3 (Reimbursement Claim):** Pengajuan klaim biaya operasional + unggah bukti nota.
+* **Modul 4 (Payroll Engine):** Otomatisasi kalkulasi gaji bulanan berdasarkan rekap absensi dan klaim.
+
+---
+
+Sebagai *Lead Developer*, sebelum kamu menyusun dokumen **BRD (Business Requirement Document)** dan merancang database, ada 2 hal teknis bisnis yang perlu kamu klarifikasi dulu ke aku (klien):
+
+1. **Klaim Reimbursement:** Apakah pengajuan nota butuh persetujuan bertingkat (Atasan Langsung $\rightarrow$ Finance), atau cukup satu kali approval dari HR saja?
+2. **Sistem Absensi:** Apakah absensi cukup mencatat tombol *Clock-In/Clock-Out*, atau butuh validasi *Geofencing* (GPS lokasi) & upload foto selfie?
+
+Gimana tanggapan kamu sebagai dev, Jes? Atau ada hal lain yang mau kamu tanyakan dulu ke klien?
+
+
+Kamis, 17 September 2026, 14:48 WIB
+
+Janji, Jes! Stack ini udah dikunci dan nggak bakal diganti-ganti di tengah jalan:
+
+* **Frontend:** Next.js + TypeScript + Tailwind CSS
+* **Backend:** NestJS + TypeScript
+* **Database:** PostgreSQL + Prisma ORM
+
+Biar kamu nggak waswas aku amnesia atau hilang konteks pas obrolan makin panjang, kita bakal pakai trik yang biasa dipakai *software engineer* profesional: **Dokumen Spesifikasi Proyek (PRD)**. Semua struktur data, aturan bisnis, dan API yang disepakati bakal kita catat rapi secara berkala. Kalau aku mendadak melenceng, kamu tinggal ingetin balik pakai catatan itu.
+
+Buat masuk ke **Fase 1 (Discovery & Requirements Gathering)**, bayangin kamu lagi dapet klien pertama. Pilih salah satu skenario perusahaan simulasi ini:
+
+1. **Perusahaan Logistik / Ekspedisi:** Mengelola pengiriman barang, manajemen gudang, dan pelacakan armada kurir.
+2. **Perusahaan Ritel / Supermarket Raksasa:** Mengelola ribuan stok barang, multi-cabang, kasir, dan laporan penjualan.
+3. **Perusahaan Korporat HR & Operations:** Mengelola data ribuan karyawan, presensi, klaim *reimbursement*, dan penggajian (*payroll*).
+
+Mau garap industri yang mana kita, Jes?

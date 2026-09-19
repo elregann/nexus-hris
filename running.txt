@@ -1,0 +1,20 @@
+{
+  "title": "Beli Mouse & Keyboard",
+  "amount": 250000,
+  "description": "Perlengkapan inventaris kantor"
+}
+
+{
+  "employeeId": "059f1f1e-53ab-45c2-bf10-9df2dc54be68",
+  "month": 9,
+  "year": 2026
+}
+
+{
+  "email": "admin@nexus.com",
+  "password": "Password123!"
+}
+
+npm run start:dev
+
+npm run dev
